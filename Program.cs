@@ -15,7 +15,7 @@ namespace LifeHospital
                                     builder.Services.AddDbContext<AuthDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-                                                builder.Services.AddDefaultIdentity<LifeHospitalUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                                    builder.Services.AddDefaultIdentity<LifeHospitalUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<AuthDbContext>();
 
             // Add services to the container.
