@@ -12,10 +12,10 @@ public class LifeHospitalUser : IdentityUser
 {
     [PersonalData]
     [Column(TypeName ="nvarchar(100)")]
-    public int FirstName { get; set; }
+    public string FirstName { get; set; }
 
     [PersonalData]
     [Column(TypeName = "nvarchar(100)")]
-    public int LastName { get; set; }
+    public string LastName { get; set; }
 }
 
