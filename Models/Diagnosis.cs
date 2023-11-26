@@ -6,13 +6,18 @@ namespace LifeHospital.Models
     {
         [Key]
         public int Id { get; set; }
-        public string PatientName { get; set; }
+        [Required]
+        public int PatientID { get; set; }
+        [Required]
         public string diagnosis { get; set; }
         public string Description { get; set; }
-        public DateTime DateOfDiagnosis { get; set; }
+        public DateTime DateCreated { get; set; } = DateTime.Now;
 
+        [Required]
         public string recommendedTreatment { get; set; }
+        [Required]
         public string Prescription { get; set; }
+        [Required]
         public string EmployeeID { get; set;}
     }
 }
