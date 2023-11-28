@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LifeHospital", "LifeHospital.csproj", "{D42FACD8-6707-4C9A-B65D-F5B335427DAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LifeHospital", "LifeHospital.csproj", "{D42FACD8-6707-4C9A-B65D-F5B335427DAC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{72858F9E-2E19-471A-B39D-EA818A3CFBF8}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

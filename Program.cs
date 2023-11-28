@@ -2,12 +2,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using LifeHospital.Data;
 using LifeHospital.Areas.Identity.Data;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace LifeHospital
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
                         var connectionString = builder.Configuration.GetConnectionString("AuthDbContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthDbContextConnection' not found.");
@@ -16,6 +17,7 @@ namespace LifeHospital
                 options.UseSqlServer(connectionString));
 
                                     builder.Services.AddDefaultIdentity<LifeHospitalUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AuthDbContext>();
 
             // Add services to the container.
@@ -49,6 +51,42 @@ namespace LifeHospital
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
+
+            using ( var scope = app.Services.CreateScope() )
+            {
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                var roles = new[] { "Admin", "Doctor", "Nurse", "Patient"};
+
+                foreach ( var role in roles )
+                {
+                    if (!await roleManager.RoleExistsAsync(role))
+                        await roleManager.CreateAsync( new IdentityRole(role) );
+                }
+            }
+
+            using( var scope = app.Services.CreateScope() )
+            {
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<LifeHospitalUser>>();
+
+                string userEmail = "admin@life.hospital";
+                string password = "Admin432#";
+                string firstName = "Mike";
+                string lastName = "Tyson";
+
+                if( await userManager.FindByEmailAsync(userEmail) == null)
+                {
+                    var user = new LifeHospitalUser();
+                    user.FirstName = firstName;
+                    user.LastName = lastName;
+                    user.Email = userEmail;
+                    user.UserName = userEmail;
+
+                    await userManager.CreateAsync (user, password);
+
+                    await userManager.AddToRoleAsync( user, "Admin" );
+                }
+            }
 
             app.Run();
         }
